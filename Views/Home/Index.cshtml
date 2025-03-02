@@ -1,0 +1,156 @@
+﻿@{
+    ViewData["Title"] = "Aplicativo vista y reporte de robos";
+    Layout = "_Layout"; // Usa el layout compartido
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/paginaPrincipal.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <style>
+        #map {
+            height: 500px;
+            width: 45vw;
+            border: solid 2px;
+        }
+
+        .input-container {
+            display: none;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/512/5067/5067875.png" />
+</head>
+<body>
+    <header class="mb-4 border border-dark">
+        <nav class="navbar navbar-expand-lg sticky-top">
+            <div class="container">
+                <a asp-controller="Home" asp-action="Index">
+                    <img style="width: 50px; height: 50px; border-radius: 50%;" src="https://cdn-icons-png.flaticon.com/512/5067/5067875.png" alt="Logo">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto me-5">
+                        <!-- Aquí puedes agregar más elementos del menú si es necesario -->
+                    </ul>
+                    <a class="btn btn-light me-5" asp-controller="Login" asp-action="IniciarSesion">Iniciar Sesión</a>
+                    <a class="btn btn-light" asp-controller="Login" asp-action="CrearCuenta">Crear Cuenta</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+        <h1 class="text-center mt-5">APLICATIVO VISTA ESTADISTICA Y REPORTE DE ROBOS</h1>
+
+        <section class="d-flex justify-content-around align-items-center my-4">
+            <div class="search-map text-center">
+                <p>Busqueda y mas opciones disponibles para usuarios registrados</p>
+                <div id="map"></div>
+                <div class="input-container">
+                    <input style="width: 45vw;" id="location-input" type="text" placeholder="Ubicación seleccionada" readonly>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer style="margin-top: 6rem;" class="border border-dark">
+        <ul class="list">
+            <li>
+                <a asp-controller="StaticPage" asp-action="AcercaDeNosotros">Acerca de nosotros</a>
+            </li>
+            <li>
+                <a asp-controller="StaticPage" asp-action="PrivacidadCondiciones">Privacidad y Condiciones</a>
+            </li>
+            <li>
+                <a asp-controller="Errors" asp-action="Error404">Error 404</a>
+            </li>
+            <li>
+                <a asp-controller="Errors" asp-action="Error500">Error 500</a>
+            </li>
+            <li>
+                <a asp-controller="Errors" asp-action="ErrorGeneral">Error General</a>
+            </li>
+        </ul>
+        <p class="copyright">
+            © 2024 Aplicativo de Robos. SENA, Centro de Servicios Financieros
+        </p>
+    </footer>
+
+    <script>
+        // Función para verificar la fecha de inicio de sesión
+        function checkLoginDate() {
+            const fechaLogin = localStorage.getItem('fechaLogin'); // Obtener la fecha de inicio de sesión
+
+            if (fechaLogin) {
+                const fechaActual = new Date();
+                const mesActual = String(fechaActual.getMonth() + 1).padStart(2, '0'); // Mes actual (1-12)
+                const diaActual = String(fechaActual.getDate()).padStart(2, '0'); // Día actual (1-31)
+                const fechaActualFormato = `${mesActual}-${diaActual}`; // Formato "mes-día"
+
+                // Comparar la fecha de inicio de sesión con la fecha actual
+                if (fechaLogin !== fechaActualFormato) {
+                    // Borrar el localStorage si la fecha no coincide
+                    localStorage.clear();
+                    // Redirigir a la página principal
+                    window.location.href = '/';
+                }
+            }
+        }
+
+        // Función para redirigir según el plan del usuario
+        function redirectBasedOnPlan() {
+            const plan = localStorage.getItem('plan'); // Obtener el plan del localStorage
+
+            if (plan) {
+                let redirectUrl = '/';
+
+                // Redirigir según el plan
+                if (plan.toLowerCase() === 'admin') {
+                    redirectUrl = '/Home/PaginaPrincipalAdmin';
+                } else if (plan.toLowerCase() === 'premium') {
+                    redirectUrl = '/Home/PaginaPrincipalPremium';
+                } else if (plan.toLowerCase() === 'free') {
+                    redirectUrl = '/Home/PaginaPrincipalLoggeada';
+                }
+
+                // Redirigir a la página correspondiente
+                if (redirectUrl !== '/') {
+                    window.location.href = redirectUrl;
+                }
+            }
+        }
+
+        // Ejecutar las funciones al cargar la página
+        checkLoginDate(); // Verificar la fecha de inicio de sesión
+        redirectBasedOnPlan(); // Redirigir según el plan
+
+        // Mapa (código existente)
+        const map = L.map('map').setView([4.60971, -74.08175], 12); // Bogotá
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 18,
+        }).addTo(map);
+
+        L.marker([4.645365, -74.057036]).addTo(map)
+            .bindPopup('Chapinero, Bogotá')
+            .openPopup();
+
+        function removeFirstWord(text) {
+            if (text.includes(' ')) {
+                const words = text.split(' ').slice(1);
+                return words.join(' ');
+            }
+            return text;
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+# Ignorar archivos binarios y de compilación
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+# Ignorar archivos de usuario y configuración local
+*.user
+*.suo
+*.userprefs
+*.lock.json
+
+# Ignorar archivos de NuGet
+.nuget/
+*.nupkg
+NuGet.exe
+packages/
+
+# Ignorar archivos de Visual Studio
+.vs/
+.vscode/
+*.swp
+*.sln.iml
+
+# Ignorar archivos de entorno y sensibles
+.env
+appsettings.Development.json
+appsettings.Local.json

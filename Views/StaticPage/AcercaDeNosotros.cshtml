@@ -1,0 +1,70 @@
+﻿@{
+    ViewData["Title"] = "Acerca de nosotros";
+    Layout = "_Layout"; // Usa el layout compartido
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/acercaDeNosotros.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/512/5067/5067875.png" />
+</head>
+<body>
+    <div class="contenedor-main">
+        <header class="mb-4 border border-dark">
+            <nav class="navbar navbar-expand-lg sticky-top">
+                <div class="container">
+                    <a asp-controller="Home" asp-action="Index">
+                        <img style="width: 50px; height: 50px; border-radius: 50%;" src="https://cdn-icons-png.flaticon.com/512/5067/5067875.png" alt="Logo">
+                    </a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav ms-auto me-5">
+                            <!-- Aquí puedes agregar más elementos del menú si es necesario -->
+                        </ul>
+                        <a class="btn btn-light me-5" asp-controller="Home" asp-action="IniciarSesion">Iniciar Sesión</a>
+                        <a class="btn btn-light" asp-controller="Home" asp-action="CrearCuenta">Crear Cuenta</a>
+                    </div>
+                </div>
+            </nav>
+        </header>
+        <main>
+            <div class="two alt-two mb-4">
+                <h1 class="mb-4">Acerca de nosotros</h1>
+                <p class="text-start">Somos estudiantes SENA del Centro de Servicios Financieros con muchos ánimos de poder brindar nuestros conocimientos en pro de una mejor sociedad y comunidad, creemos que la información oportuna y precisa es clave para tomar decisiones informadas. Juntos podemos marcar la diferencia y trabajar hacia un futuro más seguro.</p>
+                <p class="text-start">Nuestra misión es fortalecer la seguridad ciudadana mediante la tecnología, promoviendo la prevención y mejorando la respuesta ante incidentes.</p>
+                <p class="text-start">Nuestra visión es convertirnos en el principal referente digital para el monitoreo y reporte de robos en Colombia, contribuyendo a la construcción de comunidades más seguras y conectadas.</p>
+                <p class="text-start">Nuestro objetivo principal es proporcionar una herramienta confiable, intuitiva y eficiente que permita a los usuarios reportar incidentes de robo, acceder a estadísticas relevantes y visualizar zonas de riesgo de manera georreferenciada.</p>
+            </div>
+            <hr>
+            <a asp-controller="Home" asp-action="Index" class="btn btn-outline-dark">Volver</a>
+        </main>
+        <footer class="border border-dark">
+            <ul class="list">
+                <li>
+                    <a asp-controller="StaticPage" asp-action="AcercaDeNosotros">Acerca de nosotros</a>
+                </li>
+                <li>
+                    <a asp-controller="StaticPage" asp-action="PrivacidadCondiciones">Privacidad y Condiciones</a>
+                </li>
+                <li>
+                    <a asp-controller="StaticPage" asp-action="Error404">Error 404</a>
+                </li>
+                <li>
+                    <a asp-controller="StaticPage" asp-action="Error500">Error 500</a>
+                </li>
+            </ul>
+            <p class="copyright">
+                © 2024 Aplicativo de Robos. SENA, Centro de Servicios Financieros
+            </p>
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,141 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&subset=devanagari,latin-ext');
+
+body {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/1462889/pat-back.svg');
+    background-size: 5%;
+}
+
+:root {
+    --c-dark: #212529;
+    --c-brand: #4e57d4;
+    --c-brand-light: #86b6fd;
+    --c-brand-rgb: 78, 87, 212;
+    --c-body: #727272;
+    --font-base: "ClashDisplay", sans-serif;
+    --box-shadow: 0px 15px 25px rgba(0,0,0,0.08);
+    --transition: all 0.5s ease;
+}
+
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+    font-weight: 600;
+    color: var(--c-dark);
+}
+
+a {
+    text-decoration: none;
+    color: var(--c-brand);
+    transition: var(--transition);
+}
+
+    a:hover {
+        color: var(--c-brand-light);
+    }
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+header {
+    background-color: var(--c-brand-light);
+}
+
+.navbar {
+    box-shadow: var(--box-shadow);
+}
+
+.navbar-nav .nav-link {
+    font-weight: 500;
+    color: var(--c-dark);
+}
+
+    .navbar-nav .nav-link.active {
+        color: var(--c-brand);
+    }
+
+.btn {
+    font-weight: 600;
+    font-size: 14px;
+    text-transform: uppercase;
+    border-radius: 0;
+    padding: 10px 24px;
+}
+
+.search-section {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px auto;
+    width: 90%;
+    background-color: var(--color-secundario);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.search-map img {
+    max-width: 100%;
+    border-radius: 10px;
+}
+
+.search-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.input-section {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.input-buscar {
+    width: 70%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.buscar-btn {
+    padding: 10px 20px;
+    margin-left: 10px;
+}
+
+footer {
+    padding: 20px 0 5px 0;
+    margin-top: 30px;
+    background-color: #eeeeee;
+}
+
+    footer ul {
+        margin-top: 0;
+        padding: 0;
+        list-style: none;
+        font-size: 18px;
+        line-height: 1.6;
+        margin-bottom: 0;
+        text-align: center;
+    }
+
+        footer ul li a {
+            color: #212529;
+            text-decoration: none;
+            opacity: 0.8;
+        }
+
+        footer ul li {
+            display: inline-block;
+            padding: 0 15px;
+        }
+
+            footer ul li a:hover {
+                opacity: 1;
+            }
+
+    footer .copyright {
+        margin-top: 15px;
+        text-align: center;
+        font-size: 13px;
+        color: #aaa;
+    }

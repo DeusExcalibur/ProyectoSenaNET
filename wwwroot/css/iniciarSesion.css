@@ -1,0 +1,72 @@
+﻿.login-card {
+    padding: 40px;
+    width: 30dvw;
+    background-color: #F7F7F7;
+    margin: 100px auto 10px auto;
+    border-radius: 5px;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+#logo {
+    margin: 0 auto;
+    width: 400px;
+    font-family: 'Lily Script One', cursive;
+    font-size: 60px;
+    font-weight: bold;
+    text-align: center;
+    color: rgb(51, 51, 51);
+    -webkit-transition: 0.2s ease all;
+    -moz-transition: 0.2s ease all;
+    -ms-transition: 0.2s ease all;
+    -o-transition: 0.2s ease all;
+    transition: 0.2s ease all;
+}
+
+    #logo:hover {
+        color: cornflowerblue;
+    }
+
+header {
+    background-color: #86b6fd;
+}
+
+.navbar {
+    box-shadow: var(--box-shadow);
+}
+
+.navbar-nav .nav-link {
+    font-weight: 500;
+    color: #212529;
+}
+
+    .navbar-nav .nav-link.active {
+        color: #4e57d4;
+    }
+
+.btn {
+    font-weight: 600;
+    font-size: 14px;
+    text-transform: uppercase;
+    border-radius: 0;
+    padding: 10px 24px;
+}
+
+body {
+    background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/1462889/pat-back.svg');
+    background-size: 5%;
+}
+
+.login-card a {
+    text-decoration: none;
+    color: #000000;
+    font-weight: 400;
+    text-align: center;
+    display: inline-block;
+    opacity: 1;
+    transition: opacity ease 0.5s;
+}
+
+    .login-card a:hover {
+        opacity: 0.7;
+    }
