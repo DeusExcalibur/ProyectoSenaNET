@@ -1,7 +1,25 @@
+using MySql.Data.MySqlClient;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Configuración de servicios
 builder.Services.AddControllersWithViews();
+
+// Obtener la cadena de conexión desde appsettings.json
+string connectionString = builder.Configuration.GetConnectionString("MySQLConnection");
+
+try
+{
+    using (var connection = new MySqlConnection(connectionString))
+    {
+        connection.Open();
+        Console.WriteLine("✅ Conexión a MySQL exitosa.");
+    }
+}
+catch (Exception ex)
+{
+    Console.WriteLine($"❌ Error al conectar con MySQL: {ex.Message}");
+}
 
 var app = builder.Build();
 

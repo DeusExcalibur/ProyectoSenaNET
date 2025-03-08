@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "Crear Cuenta";
+    ViewData["Title"] = "PQRS";
     Layout = "_Layout"; // Usa el layout compartido
 }
 
@@ -8,6 +8,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/512/5067/5067875.png" />
     <style>
@@ -55,6 +56,12 @@
         .invalid-feedback {
             color: #dc3545;
         }
+
+        #errorMensaje {
+            text-align: center;
+            margin-top: 1rem;
+            color: #dc3545;
+        }
     </style>
 </head>
 <body>
@@ -62,7 +69,8 @@
         <nav class="navbar navbar-expand-lg sticky-top">
             <div class="container">
                 <a asp-controller="Home" asp-action="Index">
-                    <img style="width: 50px; height: 50px; border-radius: 50%;" src="https://cdn-icons-png.flaticon.com/512/5067/5067875.png" alt="Logo">
+                    <img style="width: 50px; height: 50px; border-radius: 50%;"
+                         src="https://cdn-icons-png.flaticon.com/512/5067/5067875.png" alt="Logo">
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -70,7 +78,18 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto me-5">
-                        <!-- Opciones adicionales del navbar -->
+                        <li class="nav-item p-2">
+                            <a class="nav-link" asp-controller="Reportes" asp-action="Reportar">Reportar Robo</a>
+                        </li>
+                        <li class="nav-item p-2">
+                            <a class="nav-link" asp-controller="Planes" asp-action="Index">Mejorar a Premium</a>
+                        </li>
+                        <li class="nav-item p-2">
+                            <a class="nav-link" asp-controller="Mapa" asp-action="Index">Mapa de Navegación</a>
+                        </li>
+                        <li class="nav-item p-2 me-5">
+                            <a class="nav-link" asp-controller="PQRS" asp-action="Index">PQRS</a>
+                        </li>
                     </ul>
                     <a class="btn btn-light me-5" asp-controller="Login" asp-action="IniciarSesion">Iniciar Sesión</a>
                     <a class="btn btn-light" asp-controller="Login" asp-action="CrearCuenta">Crear Cuenta</a>
@@ -81,82 +100,51 @@
 
     <div class="login-card">
         <a asp-controller="Home" asp-action="Index">Volver</a>
-        <form id="crearCuentaForm" class="row g-3 needs-validation" novalidate>
-            <h3 id="logo">Crear Cuenta</h3>
+        <form id="pqrsForm" class="row g-3 needs-validation" novalidate>
+            <h3 id="logo">Formulario PQRS</h3>
 
-            <div class="col-md-12">
-                <label for="nombre1" class="form-label">Primer Nombre</label>
-                <input type="text" class="form-control" id="nombre1" name="nombre1" placeholder="Ingresa tu 1er nombre" required>
-                <div class="invalid-feedback">
-                    Por favor ingresa tu primer nombre.
-                </div>
-            </div>
-
-            <div class="col-md-12">
-                <label for="nombre2" class="form-label">Segundo Nombre</label>
-                <input type="text" class="form-control" id="nombre2" name="nombre2" placeholder="Ingresa tu 2do nombre (opcional)">
-            </div>
-
-            <div class="col-md-12">
-                <label for="apellido1" class="form-label">Primer Apellido</label>
-                <input type="text" class="form-control" id="apellido1" name="apellido1" placeholder="Ingresa tu 1er apellido" required>
-                <div class="invalid-feedback">
-                    Por favor ingresa tu primer apellido.
-                </div>
-            </div>
-
-            <div class="col-md-12">
-                <label for="apellido2" class="form-label">Segundo Apellido</label>
-                <input type="text" class="form-control" id="apellido2" name="apellido2" placeholder="Ingresa tu 2do apellido" required>
-                <div class="invalid-feedback">
-                    Por favor ingresa tu segundo apellido.
-                </div>
-            </div>
-
-            <div class="col-md-12">
-                <label for="tipoDocumento" class="form-label">Tipo de Documento</label>
-                <select class="form-select" id="tipoDocumento" name="tipoDocumento" required>
-                    <option selected disabled value="">Selecciona un tipo</option>
-                    <option value="CC">Cédula de Ciudadanía</option>
-                    <option value="TI">Tarjeta de Identidad</option>
-                    <option value="CE">Cédula de Extranjería</option>
-                    <option value="Pasaporte">Pasaporte</option>
+            <div class="col-md-12 mt-4">
+                <label for="tipoPqrs" class="form-label">Tipo de PQRS</label>
+                <select class="form-select" id="tipoPqrs" name="tipoPqrs" required>
+                    <option selected disabled value="">Selecciona una opción</option>
+                    <option value="Petición">Petición</option>
+                    <option value="Queja">Queja</option>
+                    <option value="Reclamo">Reclamo</option>
+                    <option value="Sugerencia">Sugerencia</option>
                 </select>
                 <div class="invalid-feedback">
-                    Por favor selecciona un tipo de documento.
+                    Por favor selecciona un tipo de PQRS.
                 </div>
             </div>
 
             <div class="col-md-12">
-                <label for="numeroDocumento" class="form-label">Número de Documento</label>
-                <input type="number" class="form-control" id="numeroDocumento" name="numeroDocumento" placeholder="Ingresa tu número de documento" required>
+                <label for="nombreUsuario" class="form-label">Nombre</label>
+                <input type="text" class="form-control" id="nombreUsuario" name="nombreUsuario" placeholder="Ingresa tu nombre" required>
                 <div class="invalid-feedback">
-                    Por favor ingresa tu número de documento.
+                    Por favor ingresa tu nombre.
                 </div>
             </div>
 
             <div class="col-md-12">
-                <label for="correo" class="form-label">Correo Electrónico</label>
-                <input type="email" class="form-control" id="correo" name="correo" placeholder="Ingresa tu correo" required>
+                <label for="correoUsuario" class="form-label">Correo Electrónico</label>
+                <input type="email" class="form-control" id="correoUsuario" name="correoUsuario" placeholder="Ingresa tu correo" required>
                 <div class="invalid-feedback">
                     Por favor ingresa un correo válido.
                 </div>
             </div>
 
             <div class="col-md-12">
-                <label for="password" class="form-label">Contraseña</label>
-                <input type="password" class="form-control" id="password" name="password" placeholder="Crea una contraseña" required>
+                <label for="descripcionPqrs" class="form-label">Descripción</label>
+                <textarea class="form-control" id="descripcionPqrs" name="descripcionPqrs" rows="4" placeholder="Describe tu PQRS" required></textarea>
                 <div class="invalid-feedback">
-                    Por favor crea una contraseña.
+                    Por favor proporciona una descripción.
                 </div>
             </div>
 
             <div class="col-12 mt-4">
-                <button class="btn btn-dark" type="submit">Registrarse</button>
+                <button class="btn btn-dark" type="submit">Enviar PQRS</button>
             </div>
         </form>
-
-        <p id="mensaje" style="color: red; text-align: center; margin-top: 1rem;"></p>
     </div>
 
     <footer class="bg-light py-3 mt-4">
@@ -167,9 +155,7 @@
 
     <script>
         (() => {
-            'use strict'
-
-            const form = document.getElementById('crearCuentaForm');
+            const form = document.getElementById('pqrsForm');
 
             form.addEventListener('submit', async (event) => {
                 event.preventDefault();
@@ -184,7 +170,7 @@
                 const data = Object.fromEntries(formData.entries());
 
                 try {
-                    const response = await fetch('/Login/CrearCuenta', {
+                    const response = await fetch('/PQRS/EnviarPQRS', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -192,16 +178,16 @@
                         body: JSON.stringify(data),
                     });
 
-                    const result = await response.json();
                     if (response.ok) {
-                        alert("Cuenta creada exitosamente.");
-                        window.location.href = "/Login/IniciarSesion"; // Redirige al login
+                        alert('Muchas gracias por compartir su opinión o inquietud con nosotros');
+                        window.location.href = "/PQRS/Index"; // Redirige a la página de PQRS
                     } else {
-                        document.getElementById("mensaje").textContent = result.error;
+                        const errorData = await response.json();
+                        alert(errorData.error || "Error al enviar el PQRS");
                     }
                 } catch (error) {
                     console.error('Error:', error);
-                    document.getElementById("mensaje").textContent = "Error al crear la cuenta.";
+                    alert('Error al enviar el PQRS');
                 }
             }, false);
         })();

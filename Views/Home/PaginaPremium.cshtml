@@ -1,0 +1,145 @@
+﻿@{
+    ViewData["Title"] = "Administrador";
+    Layout = "_Layout"; // Asegúrate de que este layout exista o usa el que corresponda
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/inicioPrincipal.css"> <!-- Asegúrate de que la ruta del CSS sea correcta -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <style>
+        #map {
+            height: 500px;
+            width: 45vw;
+            border: solid 2px;
+        }
+
+        .input-container {
+            margin-top: 10px;
+            text-align: center;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/512/5067/5067875.png" />
+</head>
+<body>
+    <header class="mb-4 border border-dark">
+        <nav class="navbar navbar-expand-lg sticky-top">
+            <div class="container">
+                <a asp-controller="Home" asp-action="Index"><img style="width: 50px; height: 50px; border-radius: 50%;" src="https://cdn-icons-png.flaticon.com/512/5067/5067875.png" alt="Logo"></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto me-5">
+                        <li class="nav-item p-2">
+                            <a class="nav-link" asp-controller="Home" asp-action="Reportar">Reportar Robo</a>
+                        </li>
+                        <li class="nav-item p-2">
+                            <a class="nav-link" asp-controller="Home" asp-action="Planes">Mejorar a Premium</a>
+                        </li>
+                        <li class="nav-item p-2">
+                            <a class="nav-link" asp-controller="Home" asp-action="MapaNavegacion">Mapa de navegación</a>
+                        </li>
+                        <li class="nav-item p-2 me-5">
+                            <a class="nav-link" asp-controller="Home" asp-action="PQRS">PQRS</a>
+                        </li>
+                    </ul>
+                    <button type="button" class="btn btn-light me-5">
+                        <a class="nav-link" asp-controller="Home" asp-action="VerReportes">Ver Reportes</a>
+                    </button>
+                    <button type="button" class="btn btn-light me-5">
+                        <a class="nav-link" asp-controller="Home" asp-action="Index">Cerrar Sesión</a>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+        <h1 class="text-center mt-5">BIENVENIDO JONATHAN</h1>
+
+        <section class="d-flex justify-content-around align-items-center my-4">
+            <div class="search-map text-center">
+                <p>Busca el nombre del barrio de Chapinero el cuál quieres saber mas información</p>
+                <div id="map"></div>
+                <div class="input-container">
+                    <input style="width: 45vw;" id="location-input" type="text" placeholder="Ubicación seleccionada" readonly>
+                </div>
+            </div>
+            <div class="d-flex flex-column align-items-center">
+                <a asp-controller="Home" asp-action="Reportar" class="btn btn-dark btn-lg">Reportar Robo</a>
+            </div>
+        </section>
+
+        <section class="input-section text-center mt-5">
+            <input class="form-control mb-3 w-75 mx-auto" type="text" placeholder="Ingrese una ubicación">
+            <a asp-controller="Home" asp-action="Resultados" class="btn btn-dark">Buscar</a>
+        </section>
+    </main>
+
+    <footer class="border border-dark">
+        <ul class="list">
+            <li>
+                <a asp-controller="Home" asp-action="AcercaDeNosotros">Acerca de nosotros</a>
+            </li>
+            <li>
+                <a asp-controller="Home" asp-action="PrivacidadCondiciones">Privacidad y Condiciones</a>
+            </li>
+            <li>
+                <a asp-controller="Home" asp-action="Error404">Error 404</a>
+            </li>
+            <li>
+                <a asp-controller="Home" asp-action="Error500">Error 500</a>
+            </li>
+        </ul>
+        <p class="copyright">
+            © 2024 Aplicativo de Robos. SENA, Centro de Servicios Financieros
+        </p>
+    </footer>
+
+    <script>
+        const map = L.map('map').setView([4.60971, -74.08175], 12); // Bogotá
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 18,
+        }).addTo(map);
+
+        L.marker([4.645365, -74.057036]).addTo(map)
+            .bindPopup('Chapinero, Bogotá')
+            .openPopup();
+
+        map.on('click', function(e) {
+            const { lat, lng } = e.latlng;
+
+            // URL de la API de geocodificación inversa de Nominatim
+            const url = `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`;
+
+            // Llamada a la API usando fetch para obtener los datos de la ubicación
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+
+                    // Obtener el barrio y la localidad de los datos de la dirección
+                    const address = data.address;
+                    console.log(address);
+                    const barrio = address.neighbourhood || 'Barrio desconocido';
+                    const localidad = address.suburb || 'Localidad desconocida';
+
+                    // Concatenar barrio y localidad y mostrar en el input
+                    document.getElementById('location-input').value = `${barrio}, ${localidad}`;
+                })
+                .catch(error => {
+                    console.error('Error al obtener la ubicación:', error);
+                });
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
