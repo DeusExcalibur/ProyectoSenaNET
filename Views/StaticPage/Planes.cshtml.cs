@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace ProyectoSenaScrum3.Views.StaticPage
+namespace ProyectoSenaScrum.Views.StaticPage
 {
     public class PlanesModel : PageModel
     {

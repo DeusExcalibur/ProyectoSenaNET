@@ -1,6 +1,6 @@
 ﻿@{
     ViewData["Title"] = "PQRS";
-    Layout = "_Layout"; // Usa el layout compartido
+    Layout = "_Layout";
 }
 
 <!DOCTYPE html>
@@ -12,11 +12,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/512/5067/5067875.png" />
     <style>
-        body {
-            background-color: #f8f9fa;
-            font-family: Arial, sans-serif;
-        }
-
         .login-card {
             background: white;
             padding: 2rem;
@@ -56,12 +51,6 @@
         .invalid-feedback {
             color: #dc3545;
         }
-
-        #errorMensaje {
-            text-align: center;
-            margin-top: 1rem;
-            color: #dc3545;
-        }
     </style>
 </head>
 <body>
@@ -69,8 +58,7 @@
         <nav class="navbar navbar-expand-lg sticky-top">
             <div class="container">
                 <a asp-controller="Home" asp-action="Index">
-                    <img style="width: 50px; height: 50px; border-radius: 50%;"
-                         src="https://cdn-icons-png.flaticon.com/512/5067/5067875.png" alt="Logo">
+                    <img style="width: 50px; height: 50px; border-radius: 50%;" src="https://cdn-icons-png.flaticon.com/512/5067/5067875.png" alt="Logo">
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -81,28 +69,21 @@
                         <li class="nav-item p-2">
                             <a class="nav-link" asp-controller="Reportes" asp-action="Reportar">Reportar Robo</a>
                         </li>
-                        <li class="nav-item p-2">
-                            <a class="nav-link" asp-controller="Planes" asp-action="Index">Mejorar a Premium</a>
-                        </li>
-                        <li class="nav-item p-2">
-                            <a class="nav-link" asp-controller="Mapa" asp-action="Index">Mapa de Navegación</a>
-                        </li>
                         <li class="nav-item p-2 me-5">
-                            <a class="nav-link" asp-controller="PQRS" asp-action="Index">PQRS</a>
+                            <a class="nav-link" asp-controller="PQRS" asp-action="pqrs">PQRS</a>
                         </li>
                     </ul>
-                    <a class="btn btn-light me-5" asp-controller="Login" asp-action="IniciarSesion">Iniciar Sesión</a>
-                    <a class="btn btn-light" asp-controller="Login" asp-action="CrearCuenta">Crear Cuenta</a>
+                    <button type="button" class="btn btn-light me-5" onclick="cerrarSesion()">
+                        <a class="nav-link" asp-controller="Home" asp-action="Index">Cerrar Sesion</a>
+                    </button>
                 </div>
             </div>
         </nav>
     </header>
-
     <div class="login-card">
         <a asp-controller="Home" asp-action="Index">Volver</a>
+        <h3>Formulario PQRS</h3>
         <form id="pqrsForm" class="row g-3 needs-validation" novalidate>
-            <h3 id="logo">Formulario PQRS</h3>
-
             <div class="col-md-12 mt-4">
                 <label for="tipoPqrs" class="form-label">Tipo de PQRS</label>
                 <select class="form-select" id="tipoPqrs" name="tipoPqrs" required>
@@ -112,39 +93,34 @@
                     <option value="Reclamo">Reclamo</option>
                     <option value="Sugerencia">Sugerencia</option>
                 </select>
-                <div class="invalid-feedback">
-                    Por favor selecciona un tipo de PQRS.
-                </div>
+                <div class="invalid-feedback">Por favor selecciona un tipo de PQRS.</div>
             </div>
 
+            <!-- Optional: These fields can be used for user details if needed -->
             <div class="col-md-12">
                 <label for="nombreUsuario" class="form-label">Nombre</label>
                 <input type="text" class="form-control" id="nombreUsuario" name="nombreUsuario" placeholder="Ingresa tu nombre" required>
-                <div class="invalid-feedback">
-                    Por favor ingresa tu nombre.
-                </div>
+                <div class="invalid-feedback">Por favor ingresa tu nombre.</div>
             </div>
 
             <div class="col-md-12">
                 <label for="correoUsuario" class="form-label">Correo Electrónico</label>
                 <input type="email" class="form-control" id="correoUsuario" name="correoUsuario" placeholder="Ingresa tu correo" required>
-                <div class="invalid-feedback">
-                    Por favor ingresa un correo válido.
-                </div>
+                <div class="invalid-feedback">Por favor ingresa un correo válido.</div>
             </div>
 
             <div class="col-md-12">
                 <label for="descripcionPqrs" class="form-label">Descripción</label>
                 <textarea class="form-control" id="descripcionPqrs" name="descripcionPqrs" rows="4" placeholder="Describe tu PQRS" required></textarea>
-                <div class="invalid-feedback">
-                    Por favor proporciona una descripción.
-                </div>
+                <div class="invalid-feedback">Por favor proporciona una descripción.</div>
             </div>
 
             <div class="col-12 mt-4">
                 <button class="btn btn-dark" type="submit">Enviar PQRS</button>
             </div>
         </form>
+
+        <div id="mensajeExito" class="alert alert-success mt-3 d-none">PQRS creado exitosamente</div>
     </div>
 
     <footer class="bg-light py-3 mt-4">
@@ -156,6 +132,7 @@
     <script>
         (() => {
             const form = document.getElementById('pqrsForm');
+            const mensajeExito = document.getElementById('mensajeExito');
 
             form.addEventListener('submit', async (event) => {
                 event.preventDefault();
@@ -166,24 +143,34 @@
                     return;
                 }
 
-                const formData = new FormData(form);
-                const data = Object.fromEntries(formData.entries());
+                // Retrieve the identifier from LocalStorage
+                const identificador = localStorage.getItem("identificador");
+                if (!identificador) {
+                    alert("Error: Debes iniciar sesión antes de enviar el formulario");
+                    return;
+                }
+
+                // Build the data object matching the PQRSModel properties
+                const data = {
+                    TipoPQRS: document.getElementById("tipoPqrs").value,
+                    Descripcion: document.getElementById("descripcionPqrs").value,
+                    Estado: "Pendiente", // Set default state (adjust as needed)
+                    Identificador: identificador
+                };
 
                 try {
-                    const response = await fetch('/PQRS/EnviarPQRS', {
+                    // Correct endpoint to match the controller action
+                    const response = await fetch('/PQRS/CrearPQRS', {
                         method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
+                        headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(data),
                     });
 
                     if (response.ok) {
-                        alert('Muchas gracias por compartir su opinión o inquietud con nosotros');
-                        window.location.href = "/PQRS/Index"; // Redirige a la página de PQRS
+                        mensajeExito.classList.remove("d-none");
+                        setTimeout(() => location.reload(), 2000);
                     } else {
-                        const errorData = await response.json();
-                        alert(errorData.error || "Error al enviar el PQRS");
+                        alert("Error al enviar el PQRS");
                     }
                 } catch (error) {
                     console.error('Error:', error);

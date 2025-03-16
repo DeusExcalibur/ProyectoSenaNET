@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace ProyectoSenaScrum3.Views.Home
+namespace ProyectoSenaScrum.Views.Home
 {
     public class PaginaLoggeadaModel : PageModel
     {

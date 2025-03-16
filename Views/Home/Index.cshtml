@@ -71,13 +71,7 @@
                 <a asp-controller="StaticPage" asp-action="PrivacidadCondiciones">Privacidad y Condiciones</a>
             </li>
             <li>
-                <a asp-controller="Errors" asp-action="Error404">Error 404</a>
-            </li>
-            <li>
-                <a asp-controller="Errors" asp-action="Error500">Error 500</a>
-            </li>
-            <li>
-                <a asp-controller="Errors" asp-action="ErrorGeneral">Error General</a>
+                <a asp-controller="StaticPage" asp-action="MapaNavegacion">Mapa Navegacion</a>
             </li>
         </ul>
         <p class="copyright">
@@ -86,25 +80,6 @@
     </footer>
 
     <script>
-        // Función para verificar la fecha de inicio de sesión
-        function checkLoginDate() {
-            const fechaLogin = localStorage.getItem('fechaLogin'); // Obtener la fecha de inicio de sesión
-
-            if (fechaLogin) {
-                const fechaActual = new Date();
-                const mesActual = String(fechaActual.getMonth() + 1).padStart(2, '0'); // Mes actual (1-12)
-                const diaActual = String(fechaActual.getDate()).padStart(2, '0'); // Día actual (1-31)
-                const fechaActualFormato = `${mesActual}-${diaActual}`; // Formato "mes-día"
-
-                // Comparar la fecha de inicio de sesión con la fecha actual
-                if (fechaLogin !== fechaActualFormato) {
-                    // Borrar el localStorage si la fecha no coincide
-                    localStorage.clear();
-                    // Redirigir a la página principal
-                    window.location.href = '/';
-                }
-            }
-        }
 
         // Función para redirigir según el plan del usuario
         function redirectBasedOnPlan() {
@@ -115,11 +90,11 @@
 
                 // Redirigir según el plan
                 if (plan.toLowerCase() === 'admin') {
-                    redirectUrl = '/Home/PaginaPrincipalAdmin';
+                    redirectUrl = '/Home/PaginaAdministrador';
                 } else if (plan.toLowerCase() === 'premium') {
-                    redirectUrl = '/Home/PaginaPrincipalPremium';
+                    redirectUrl = '/Home/PaginaPremium';
                 } else if (plan.toLowerCase() === 'free') {
-                    redirectUrl = '/Home/PaginaPrincipalLoggeada';
+                    redirectUrl = '/Home/PaginaLoggeada';
                 }
 
                 // Redirigir a la página correspondiente
@@ -129,9 +104,7 @@
             }
         }
 
-        // Ejecutar las funciones al cargar la página
-        checkLoginDate(); // Verificar la fecha de inicio de sesión
-        redirectBasedOnPlan(); // Redirigir según el plan
+        redirectBasedOnPlan();
 
         // Mapa (código existente)
         const map = L.map('map').setView([4.60971, -74.08175], 12); // Bogotá

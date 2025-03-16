@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace ProyectoSenaScrum3.Views.Login
+namespace ProyectoSenaScrum.Views.Login
 {
     public class CrearCuentaModel : PageModel
     {

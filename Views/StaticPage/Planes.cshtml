@@ -27,22 +27,22 @@
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse" id="navbarNav">
-                        <ul class="navbar-nav ms-auto me-5">
-                            <li class="nav-item p-2">
-                                <a class="nav-link" asp-controller="Reportes" asp-action="Reportar">Reportar Robo</a>
-                            </li>
-                            <li class="nav-item p-2">
-                                <a class="nav-link" asp-controller="Planes" asp-action="Index">Mejorar a Premium</a>
-                            </li>
-                            <li class="nav-item p-2">
-                                <a class="nav-link" asp-controller="Mapa" asp-action="Index">Mapa de Navegación</a>
-                            </li>
-                            <li class="nav-item p-2 me-5">
-                                <a class="nav-link" asp-controller="PQRS" asp-action="Index">PQRS</a>
-                            </li>
-                        </ul>
-                        <a class="btn btn-light me-5" asp-controller="Login" asp-action="IniciarSesion">Iniciar Sesión</a>
-                        <a class="btn btn-light" asp-controller="Login" asp-action="CrearCuenta">Crear Cuenta</a>
+                        @* <ul class="navbar-nav ms-auto me-5"> *@
+                        @*     <li class="nav-item p-2"> *@
+                        @*         <a class="nav-link" asp-controller="Reportar" asp-action="Reportar">Reportar Robo</a> *@
+                        @*     </li> *@
+                        @*     <li class="nav-item p-2"> *@
+                        @*         <a class="nav-link" asp-controller="StaticPage" asp-action="Planes">Mejorar a Premium</a> *@
+                        @*     </li> *@
+                        @*     <li class="nav-item p-2"> *@
+                        @*         <a class="nav-link" asp-controller="StaticPage" asp-action="MapaNavegacion">Mapa de Navegación</a> *@
+                        @*     </li> *@
+                        @*     <li class="nav-item p-2 me-5"> *@
+                        @*         <a class="nav-link" asp-controller="PQRS" asp-action="pqrs">PQRS</a> *@
+                        @*     </li> *@
+                        @* </ul> *@
+                        @* <a class="btn btn-light me-5" asp-controller="Login" asp-action="IniciarSesion">Iniciar Sesión</a> *@
+                        @* <a class="btn btn-light" asp-controller="Login" asp-action="CrearCuenta">Crear Cuenta</a> *@
                     </div>
                 </div>
             </nav>
@@ -90,7 +90,7 @@
             </div>
             <div class="text-center mt-4">
                 <p class="fw-bold fs-5">¡Adquiere Premium por solo <span class="text-danger">$10,000 COP</span> al mes!</p>
-                <a asp-controller="Planes" asp-action="ComprarPremium" class="btn btn-dark">Comprar Premium</a>
+                <a asp-controller="StaticPage" asp-action="Planes" class="btn btn-dark">Comprar Premium</a>
             </div>
             <div style="text-align: center; margin-top: 50px;">
                 <a asp-controller="Home" asp-action="Index" class="btn btn-outline-dark">Volver</a>

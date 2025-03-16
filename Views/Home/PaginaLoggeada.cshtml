@@ -1,5 +1,6 @@
 ﻿@{
     ViewData["Title"] = "Aplicativo vista y reporte de robos";
+    var identificador = ViewData["Identificador"] as string ?? "";
     var nombre = ViewData["Nombre"] as string ?? "Usuario";
     var apellido = ViewData["Apellido"] as string ?? "";
     var plan = ViewData["Plan"] as string ?? "Básico";
@@ -34,7 +35,9 @@
     <header class="mb-4 border border-dark">
         <nav class="navbar navbar-expand-lg sticky-top">
             <div class="container">
-                <a href="#"><img style="width: 50px; height: 50px; border-radius: 50%;" src="https://cdn-icons-png.flaticon.com/512/5067/5067875.png" alt="Logo"></a>
+                <a asp-controller="Home" asp-action="Index">
+                    <img style="width: 50px; height: 50px; border-radius: 50%;" src="https://cdn-icons-png.flaticon.com/512/5067/5067875.png" alt="Logo">
+                </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -42,20 +45,17 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto me-5">
                         <li class="nav-item p-2">
-                            <a class="nav-link" href="~/Home/Reportar">Reportar Robo</a>
+                            <a class="nav-link" asp-controller="Reportes" asp-action="Reportar">Reportar Robo</a>
                         </li>
                         <li class="nav-item p-2">
-                            <a class="nav-link" href="~/Home/Planes">Mejorar a Premium</a>
-                        </li>
-                        <li class="nav-item p-2">
-                            <a class="nav-link" href="~/Home/MapaNavegacion">Mapa de navegación</a>
+                            <a class="nav-link" asp-controller="StaticPage" asp-action="Planes">Mejorar a Premium</a>
                         </li>
                         <li class="nav-item p-2 me-5">
-                            <a class="nav-link" href="~/Home/PQRS">PQRS</a>
+                            <a class="nav-link" asp-controller="PQRS" asp-action="pqrs">PQRS</a>
                         </li>
                     </ul>
                     <button type="button" class="btn btn-light me-5" onclick="cerrarSesion()">
-                        <a class="nav-link" href="~/Home/Logout">Cerrar Sesión</a>
+                        <a class="nav-link" asp-controller="Home" asp-action="Index">Cerrar Sesion</a>
                     </button>
                 </div>
             </div>
@@ -75,31 +75,84 @@
                 </div>
             </div>
             <div class="d-flex flex-column align-items-center">
-                <a href="~/Home/Reportar" class="btn btn-dark btn-lg">Reportar Robo</a>
+                <a class="btn btn-dark" asp-controller="Reportes" asp-action="Reportar">Reportar Robo</a>
             </div>
         </section>
 
         <section class="input-section text-center mt-5">
             <input id="search-input" class="form-control mb-3 w-75 mx-auto" type="text" placeholder="Ingrese una ubicación">
-            <a href="~/Home/Resultados" class="btn btn-dark">Buscar</a>
+            <!-- Se agrega el id "buscarBtn" para asignarle el evento correcto -->
+            <a href="~/Home/Resultados" id="buscarBtn" class="btn btn-dark">Buscar</a>
         </section>
     </main>
 
-    <footer class="border border-dark">
+    <footer style="margin-top: 6rem;" class="border border-dark">
         <ul class="list">
-            <li><a href="~/Home/AcercaDeNosotros">Acerca de nosotros</a></li>
-            <li><a href="~/Home/PrivacidadCondiciones">Privacidad y Condiciones</a></li>
-            <li><a href="~/Home/Error404">Error 404</a></li>
-            <li><a href="~/Home/Error500">Error 500</a></li>
+            <li>
+                <a asp-controller="StaticPage" asp-action="AcercaDeNosotros">Acerca de nosotros</a>
+            </li>
+            <li>
+                <a asp-controller="StaticPage" asp-action="PrivacidadCondiciones">Privacidad y Condiciones</a>
+            </li>
+            <li>
+                <a asp-controller="StaticPage" asp-action="MapaNavegacion">Mapa Navegacion</a>
+            </li>
         </ul>
-        <p class="copyright">© 2024 Aplicativo de Robos. SENA, Centro de Servicios Financieros</p>
+        <p class="copyright">
+            © 2024 Aplicativo de Robos. SENA, Centro de Servicios Financieros
+        </p>
     </footer>
 
     <script>
-        function cerrarSesion() {
-            window.location.href = "@Url.Action("Logout", "Home")";
+        // Función para obtener parámetros de la URL
+        function getUrlParams() {
+            const params = {};
+            window.location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, (m, key, value) => {
+                params[key] = value;
+            });
+            return params;
         }
 
+        // Guarda los parámetros de la URL en localStorage
+        function saveParamsToLocalStorage() {
+            const params = getUrlParams();
+            for (const key in params) {
+                localStorage.setItem(key, params[key]);
+            }
+        }
+
+        // Limpia localStorage y redirige a Home/Index
+        function cerrarSesion() {
+            localStorage.clear();
+            window.location.href = "@Url.Action("Index", "Home")";
+        }
+
+        // Normaliza una cadena eliminando caracteres especiales y la primera palabra
+        function normalizeLocalidad(text) {
+            const withoutFirstWord = text.includes(' ') ? text.split(' ').slice(1).join(' ') : text;
+            return withoutFirstWord.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        }
+
+        // Al cargar la página, guarda los parámetros en localStorage y asigna el evento al botón Buscar
+        document.addEventListener("DOMContentLoaded", () => {
+            saveParamsToLocalStorage();
+
+            const buscarBtn = document.getElementById('buscarBtn');
+            if (buscarBtn) {
+                buscarBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const localidad = localStorage.getItem('localidad');
+
+                    if (!localidad) {
+                        alert('Por favor seleccione una localidad');
+                    } else {
+                        window.location.href = '/Resultado/Resultados';
+                    }
+                });
+            }
+        });
+
+        // Inicialización del mapa
         const map = L.map('map').setView([4.60971, -74.08175], 12);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18 }).addTo(map);
         L.marker([4.645365, -74.057036]).addTo(map)
@@ -115,8 +168,14 @@
                     const address = data.address;
                     const barrio = address.neighbourhood || 'Barrio desconocido';
                     const localidad = address.suburb || 'Localidad desconocida';
+
+                    // Muestra la dirección en los inputs
                     document.getElementById('location-input').value = `${barrio}, ${localidad}`;
                     document.getElementById('search-input').value = removeFirstWord(localidad);
+
+                    // Guarda la localidad normalizada en localStorage
+                    const normalizedLocalidad = normalizeLocalidad(localidad);
+                    localStorage.setItem('localidad', normalizedLocalidad);
                 })
                 .catch(error => console.error('Error al obtener la ubicación:', error));
         });

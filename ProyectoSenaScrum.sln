@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.13.35825.156
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProyectoSenaScrum3", "ProyectoSenaScrum3.csproj", "{1EA45589-CB6D-8D51-38AD-E72BC8067C0E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProyectoSenaScrum", "ProyectoSenaScrum.csproj", "{1EA45589-CB6D-8D51-38AD-E72BC8067C0E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

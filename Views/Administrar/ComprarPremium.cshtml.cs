@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace ProyectoSenaScrum3.Views.Administrar
+namespace ProyectoSenaScrum.Views.Administrar
 {
     public class ComprarPremiumModel : PageModel
     {

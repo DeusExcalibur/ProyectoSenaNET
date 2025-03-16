@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace ProyectoSenaScrum3.Controllers
+namespace ProyectoSenaScrum.Controllers
 {
     public class ErrorsController : Controller
     {

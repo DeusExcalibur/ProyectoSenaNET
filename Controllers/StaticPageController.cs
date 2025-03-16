@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace ProyectoSenaScrum3.Controllers
+namespace ProyectoSenaScrum.Controllers
 {
     public class StaticPageController : Controller
     {
@@ -10,6 +10,16 @@ namespace ProyectoSenaScrum3.Controllers
         }
 
         public IActionResult PrivacidadCondiciones()
+        {
+            return View(); // Renderiza Views/StaticPage/PrivacidadCondiciones.cshtml
+        }
+
+        public IActionResult MapaNavegacion()
+        {
+            return View(); // Renderiza Views/StaticPage/PrivacidadCondiciones.cshtml
+        }
+
+        public IActionResult Planes()
         {
             return View(); // Renderiza Views/StaticPage/PrivacidadCondiciones.cshtml
         }

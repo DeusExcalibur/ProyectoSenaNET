@@ -29,8 +29,8 @@
                         <ul class="navbar-nav ms-auto me-5">
                             <!-- Aquí puedes agregar más elementos del menú si es necesario -->
                         </ul>
-                        <a class="btn btn-light me-5" asp-controller="Login" asp-action="IniciarSesion">Iniciar Sesión</a>
-                        <a class="btn btn-light" asp-controller="Login" asp-action="CrearCuenta">Crear Cuenta</a>
+                        @* <a class="btn btn-light me-5" asp-controller="Login" asp-action="IniciarSesion">Iniciar Sesión</a> *@
+                        @* <a class="btn btn-light" asp-controller="Login" asp-action="CrearCuenta">Crear Cuenta</a> *@
                     </div>
                 </div>
             </nav>
@@ -55,10 +55,7 @@
                     <a asp-controller="StaticPage" asp-action="PrivacidadCondiciones">Privacidad y Condiciones</a>
                 </li>
                 <li>
-                    <a asp-controller="Errors" asp-action="Error404">Error 404</a>
-                </li>
-                <li>
-                    <a asp-controller="Errors" asp-action="Error500">Error 500</a>
+                    <a asp-controller="StaticPage" asp-action="MapaNavegacion">Mapa Navegacion</a>
                 </li>
             </ul>
             <p class="copyright">

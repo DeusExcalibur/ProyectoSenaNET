@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace ProyectoSenaScrum3.Views.Reportar
+namespace ProyectoSenaScrum.Views.Reportar
 {
     public class ReportarModel : PageModel
     {

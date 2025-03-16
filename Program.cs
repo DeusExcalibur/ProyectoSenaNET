@@ -1,16 +1,30 @@
+using Microsoft.EntityFrameworkCore;
 using MySql.Data.MySqlClient;
+using ProyectoSenaScrum.Models;
+using ProyectoSenaScrum.IModel;
+using ProyectoSenaScrum.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Configuración de servicios
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"),
+    new MySqlServerVersion(new Version(8, 0, 25))));
+
+// Registrar el repositorio
+builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+builder.Services.AddScoped<IPQRSRepository, PQRSRepository>(); // Nuevo
+builder.Services.AddScoped<IReporteRepository, ReporteRepository>(); // Nuevo
+builder.Services.AddScoped<IResultadoRepository, ResultadoRepository>(); // Nuevo
+
 // Obtener la cadena de conexión desde appsettings.json
-string connectionString = builder.Configuration.GetConnectionString("MySQLConnection");
+string connectionString2 = builder.Configuration.GetConnectionString("DefaultConnection");
 
 try
 {
-    using (var connection = new MySqlConnection(connectionString))
+    using (var connection = new MySqlConnection(connectionString2))
     {
         connection.Open();
         Console.WriteLine("✅ Conexión a MySQL exitosa.");

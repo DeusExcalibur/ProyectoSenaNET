@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace ProyectoSenaScrum3.Views.PQRS
+namespace ProyectoSenaScrum.Views.PQRS
 {
     public class pqrsModel : PageModel
     {

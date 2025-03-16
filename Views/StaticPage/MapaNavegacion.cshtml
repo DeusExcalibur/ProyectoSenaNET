@@ -27,12 +27,12 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto me-5">
-                        <li class="nav-item p-2 me-5">
-                            <a class="nav-link" asp-controller="PQRS" asp-action="Index">PQRS</a>
-                        </li>
+                        @* <li class="nav-item p-2 me-5"> *@
+                        @*     <a class="nav-link" asp-controller="PQRS" asp-action="pqrs">PQRS</a> *@
+                        @* </li> *@
                     </ul>
-                    <a class="btn btn-light me-5" asp-controller="Login" asp-action="IniciarSesion">Iniciar Sesión</a>
-                    <a class="btn btn-light" asp-controller="Login" asp-action="CrearCuenta">Crear Cuenta</a>
+                    @* <a class="btn btn-light me-5" asp-controller="Login" asp-action="IniciarSesion">Iniciar Sesión</a> *@
+                    @* <a class="btn btn-light" asp-controller="Login" asp-action="CrearCuenta">Crear Cuenta</a> *@
                 </div>
             </div>
         </nav>
@@ -64,19 +64,19 @@
                 <h2 class="text-secondary border-bottom pb-2">Funciones del Aplicativo</h2>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">
-                        <a asp-controller="Reportes" asp-action="Reportar" class="text-black fw-bold">Reportar Robo</a>:
+                        <a asp-controller="Reportar" asp-action="Reportar" class="text-black fw-bold">Reportar Robo</a>:
                         Registra rápidamente un incidente en tu zona.
                     </li>
                     <li class="list-group-item">
-                        <a asp-controller="Resultados" asp-action="Index" class="text-black fw-bold">Resultados</a>:
+                        <a asp-controller="Reportar" asp-action="Resultados" class="text-black fw-bold">Resultados</a>:
                         Visualiza estadísticas sobre robos organizados por zonas.
                     </li>
                     <li class="list-group-item">
-                        <a asp-controller="Planes" asp-action="Index" class="text-black fw-bold">Planes</a>:
+                        <a asp-controller="StaticPage" asp-action="Planes" class="text-black fw-bold">Planes</a>:
                         Conoce las ventajas de ser usuario premium.
                     </li>
                     <li class="list-group-item">
-                        <a asp-controller="PQRS" asp-action="Index" class="text-black fw-bold">PQRS</a>:
+                        <a asp-controller="PQRS" asp-action="pqrs" class="text-black fw-bold">PQRS</a>:
                         Envía preguntas, quejas, reclamos o sugerencias al equipo de soporte.
                     </li>
                     <li class="list-group-item">
@@ -90,15 +90,15 @@
                 <h2 class="text-secondary border-bottom pb-2">Información Adicional</h2>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">
-                        <a asp-controller="Home" asp-action="PrivacidadCondiciones" class="text-black fw-bold">Política de Privacidad y Condiciones</a>:
+                        <a asp-controller="StaticPage" asp-action="PrivacidadCondiciones" class="text-black fw-bold">Política de Privacidad y Condiciones</a>:
                         Conoce nuestras políticas y términos de uso.
                     </li>
+                    @* <li class="list-group-item"> *@
+                    @*     <a asp-controller="Login" asp-action="RecuperarContrasena" class="text-black fw-bold">Recuperar Contraseña</a>: *@
+                    @*     Recupera tu acceso en caso de pérdida de la contraseña. *@
+                    @* </li> *@
                     <li class="list-group-item">
-                        <a asp-controller="Login" asp-action="RecuperarContrasena" class="text-black fw-bold">Recuperar Contraseña</a>:
-                        Recupera tu acceso en caso de pérdida de la contraseña.
-                    </li>
-                    <li class="list-group-item">
-                        <a asp-controller="Home" asp-action="AcercaDeNosotros" class="text-black fw-bold">Acerca de Nosotros</a>:
+                        <a asp-controller="StaticPage" asp-action="AcercaDeNosotros" class="text-black fw-bold">Acerca de Nosotros</a>:
                         Aprende más sobre el equipo detrás del aplicativo.
                     </li>
                 </ul>
@@ -108,11 +108,11 @@
                 <h2 class="text-secondary border-bottom pb-2">Errores y Soporte</h2>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">
-                        <a asp-controller="Home" asp-action="Error404" class="text-black fw-bold">Error 404</a>:
+                        <a asp-controller="Errors" asp-action="Error404" class="text-black fw-bold">Error 404</a>:
                         Página no encontrada, consulta aquí si encuentras este error.
                     </li>
                     <li class="list-group-item">
-                        <a asp-controller="Home" asp-action="Error500" class="text-black fw-bold">Error 500</a>:
+                        <a asp-controller="Errors" asp-action="Error500" class="text-black fw-bold">Error 500</a>:
                         Problema con el servidor, consulta esta página para más detalles.
                     </li>
                 </ul>
