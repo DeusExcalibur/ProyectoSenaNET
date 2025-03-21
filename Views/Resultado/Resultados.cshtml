@@ -131,12 +131,17 @@
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
+        function cerrarSesion() {
+            localStorage.clear();
+            window.location.href = "@Url.Action("Index", "Home")";
+        }
+
         document.addEventListener("DOMContentLoaded", () => {
             // Verificar si existe la variable 'localidad' en localStorage
             const localidad = localStorage.getItem('localidad');
             if (!localidad) {
                 alert('Algo salió mal, intenta nuevamente');
-                window.location.href = '/';
+                window.location.href = "@Url.Action("Index", "Home")";
                 return;
             }
 
@@ -228,7 +233,7 @@
             const localidad = localStorage.getItem('localidad');
             if (!localidad) {
                 alert('Algo salió mal, intenta nuevamente');
-                window.location.href = '/';
+                window.location.href = "@Url.Action("Index", "Home")";
                 return;
             }
 

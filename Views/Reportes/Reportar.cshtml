@@ -172,6 +172,11 @@
     </footer>
 
     <script>
+        function cerrarSesion() {
+            localStorage.clear();
+            window.location.href = "@Url.Action("Index", "Home")";
+        }
+
         (() => {
             const form = document.getElementById('reportarForm');
 
@@ -211,7 +216,7 @@
 
                     if (response.ok) {
                         alert('Robo reportado con éxito');
-                        window.location.href = "/Reportes/Index"; // Redirige a la página de reportes
+                        window.location.href = "/Reportes/Reportar"; // Redirige a la página de reportes
                     } else {
                         const errorData = await response.json();
                         alert(errorData.error || "Error al enviar el reporte");

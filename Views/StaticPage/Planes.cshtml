@@ -90,7 +90,7 @@
             </div>
             <div class="text-center mt-4">
                 <p class="fw-bold fs-5">¡Adquiere Premium por solo <span class="text-danger">$10,000 COP</span> al mes!</p>
-                <a asp-controller="StaticPage" asp-action="Planes" class="btn btn-dark">Comprar Premium</a>
+                <a asp-controller="StaticPage" asp-action="Planes" class="btn btn-dark" onclick="alertarCompra()">Comprar Premium</a>
             </div>
             <div style="text-align: center; margin-top: 50px;">
                 <a asp-controller="Home" asp-action="Index" class="btn btn-outline-dark">Volver</a>
@@ -105,5 +105,10 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function alertarCompra() {
+            alert("Comunícate al siguiente correo para ayudarte con tu gestión de plan premium: planes@gmail.com");
+        }
+    </script>
 </body>
 </html>

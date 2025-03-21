@@ -64,11 +64,11 @@
                 <h2 class="text-secondary border-bottom pb-2">Funciones del Aplicativo</h2>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">
-                        <a asp-controller="Reportar" asp-action="Reportar" class="text-black fw-bold">Reportar Robo</a>:
+                        <a asp-controller="Reportes" asp-action="Reportar" class="text-black fw-bold">Reportar Robo</a>:
                         Registra rápidamente un incidente en tu zona.
                     </li>
                     <li class="list-group-item">
-                        <a asp-controller="Reportar" asp-action="Resultados" class="text-black fw-bold">Resultados</a>:
+                        <a asp-controller="Resultado" asp-action="Resultados" class="text-black fw-bold">Resultados</a>:
                         Visualiza estadísticas sobre robos organizados por zonas.
                     </li>
                     <li class="list-group-item">
@@ -114,6 +114,10 @@
                     <li class="list-group-item">
                         <a asp-controller="Errors" asp-action="Error500" class="text-black fw-bold">Error 500</a>:
                         Problema con el servidor, consulta esta página para más detalles.
+                    </li>
+                    <li class="list-group-item">
+                        <a asp-controller="Errors" asp-action="ErrorGeneral" class="text-black fw-bold">Error 500</a>:
+                        Error general de la página si no es por 404 o 500.
                     </li>
                 </ul>
             </section>

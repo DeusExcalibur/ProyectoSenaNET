@@ -130,6 +130,11 @@
     </footer>
 
     <script>
+        function cerrarSesion() {
+            localStorage.clear();
+            window.location.href = "@Url.Action("Index", "Home")";
+        }
+
         (() => {
             const form = document.getElementById('pqrsForm');
             const mensajeExito = document.getElementById('mensajeExito');
