@@ -135,6 +135,11 @@
     </footer>
 
     <script>
+        function cerrarSesion() {
+            localStorage.clear();
+            window.location.href = "@Url.Action("Index", "Home")";
+        }
+
         $(document).ready(function () {
             // Editar Usuario Form
             $('#editarUsuarioForm').on('submit', function (e) {
