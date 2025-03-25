@@ -77,10 +77,13 @@
         </section>
 
         <section class="input-section text-center mt-5">
-            <input id="search-input" class="form-control mb-3 w-75 mx-auto" type="text" placeholder="Ingrese una ubicación">
+            <input id="search-input" class="form-control mb-3 w-75 mx-auto" type="text" placeholder="Seleccione una ubicación en el mapa" readonly>
             <!-- Se agrega el id "buscarBtn" para asignarle el evento correcto -->
             <a href="~/Home/Resultados" id="buscarBtn" class="btn btn-dark">Buscar</a>
         </section>
+        <div id="mensaje-error" class="text-danger mb-3" style="display: none;">
+            Por favor seleccione una localidad en el mapa.
+        </div>
     </main>
 
     <footer style="margin-top: 6rem;" class="border border-dark">
@@ -132,16 +135,19 @@
 
         // Al cargar la página, guarda los parámetros en localStorage y asigna el evento al botón Buscar
         document.addEventListener("DOMContentLoaded", () => {
+                        localStorage.removeItem('localidad');
+
             saveParamsToLocalStorage();
 
             const buscarBtn = document.getElementById('buscarBtn');
             if (buscarBtn) {
                 buscarBtn.addEventListener('click', function(e) {
                     e.preventDefault();
+                    const mensajeError = document.getElementById('mensaje-error');
                     const localidad = localStorage.getItem('localidad');
 
                     if (!localidad) {
-                        alert('Por favor seleccione una localidad');
+                        mensajeError.style.display = 'block'; // Muestra el mensaje
                     } else {
                         window.location.href = '/Resultado/Resultados';
                     }

@@ -22,13 +22,13 @@ namespace ProyectoSenaScrum.Controllers
         [HttpPost]
         public IActionResult EditarUsuario(string email, string newEmail)
         {
-                                                                                                                                                        var connectionString = _configuration.GetConnectionString("DefaultConnection");
+            var connectionString = _configuration.GetConnectionString("DefaultConnection");
             try
             {
                 using (var connection = new MySqlConnection(connectionString))
                 {
                     connection.Open();
-                                                                                                                                                            var query = "UPDATE proyectosena.usuarios SET correo = @newEmail WHERE correo = @email";
+                    var query = "UPDATE proyectosena.usuarios SET correo = @newEmail WHERE correo = @email";
                     using (var command = new MySqlCommand(query, connection))
                     {
                         command.Parameters.AddWithValue("@newEmail", newEmail);
@@ -55,13 +55,13 @@ namespace ProyectoSenaScrum.Controllers
         [HttpPost]
         public IActionResult DeshabilitarUsuario(string email)
         {
-                                                                                                                                                            var connectionString = _configuration.GetConnectionString("DefaultConnection");
+            var connectionString = _configuration.GetConnectionString("DefaultConnection");
             try
             {
                 using (var connection = new MySqlConnection(connectionString))
                 {
                     connection.Open();
-                                                                                                                                                                            var query = "DELETE FROM proyectosena.usuarios WHERE correo = @email";
+                    var query = "DELETE FROM proyectosena.usuarios WHERE correo = @email";
                     using (var command = new MySqlCommand(query, connection))
                     {
                         command.Parameters.AddWithValue("@email", email);
@@ -85,18 +85,19 @@ namespace ProyectoSenaScrum.Controllers
         }
 
         [HttpPost]
-        [HttpPost]
-        public IActionResult VerPQRS(int pqrsId)
+        public IActionResult VerPQRS(string estado)
         {
-                                                                                                                                                         var connectionString = _configuration.GetConnectionString("DefaultConnection");
+            var connectionString = _configuration.GetConnectionString("DefaultConnection");
             var pqrs = new DataTable();
+
             using (var connection = new MySqlConnection(connectionString))
             {
                 connection.Open();
-                                                                                                                                                                                    var query = "SELECT * FROM formulariosPQRS WHERE id_pqrs = @pqrsId";
+                var query = "SELECT * FROM formulariosPQRS WHERE estado LIKE @estado";
+
                 using (var command = new MySqlCommand(query, connection))
                 {
-                    command.Parameters.AddWithValue("@pqrsId", pqrsId);
+                    command.Parameters.AddWithValue("@estado", estado);
                     using (var adapter = new MySqlDataAdapter(command))
                     {
                         adapter.Fill(pqrs);
@@ -104,7 +105,6 @@ namespace ProyectoSenaScrum.Controllers
                 }
             }
 
-            // Convert DataTable to a list of dictionaries for JSON serialization
             var pqrsList = new List<Dictionary<string, object>>();
             foreach (DataRow row in pqrs.Rows)
             {
@@ -116,19 +116,19 @@ namespace ProyectoSenaScrum.Controllers
                 pqrsList.Add(dict);
             }
 
-            return Json(pqrsList); // Return JSON data
+            return Json(pqrsList);
         }
 
         [HttpPost]
         public IActionResult ActualizarEstadoPQRS(int pqrsId)
         {
-                                                                                                                                                                                            var connectionString = _configuration.GetConnectionString("DefaultConnection");
+            var connectionString = _configuration.GetConnectionString("DefaultConnection");
             try
             {
                 using (var connection = new MySqlConnection(connectionString))
                 {
                     connection.Open();
-                                                                                                                                                                                                var query = "UPDATE proyectosena.formulariosPQRS SET estado = 'Resuelto' WHERE id_pqrs = @pqrsId";
+                    var query = "UPDATE proyectosena.formulariosPQRS SET estado = 'Resuelto' WHERE id_pqrs = @pqrsId";
                     using (var command = new MySqlCommand(query, connection))
                     {
                         command.Parameters.AddWithValue("@pqrsId", pqrsId);
